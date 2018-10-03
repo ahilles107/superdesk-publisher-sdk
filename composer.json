@@ -1,0 +1,23 @@
+{
+    "name": "ahs/superdesk-publisher-sdk",
+    "description": "SDK for Superdesk Publisher Content Push and API",
+    "type": "library",
+    "require": {
+        "ahs/ninjs-php": "master",
+        "behat/transliterator": "^1.2@dev",
+        "hoa/mime": "^3.0@dev"
+    },
+    "license": "GPL-3.0-only",
+    "authors": [
+        {
+            "name": "Paweł Mikołajczuk",
+            "email": "mikolajczuk.private@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AHS\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

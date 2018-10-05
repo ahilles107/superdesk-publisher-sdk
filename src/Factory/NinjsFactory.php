@@ -13,7 +13,6 @@ use AHS\Ninjs\Superdesk\Rendition;
 use AHS\Content\ContentInterface;
 use AHS\Content\ImageInterface;
 use Behat\Transliterator\Transliterator;
-use Doctrine\ORM\EntityManagerInterface;
 use Hoa\Mime\Mime;
 use AHS\Content\Rendition as ArticleRendition;
 
@@ -24,25 +23,22 @@ class NinjsFactory implements FactoryInterface
      */
     protected $publicDirPath;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-
-    public function __construct(string $publicDirPath, EntityManagerInterface $entityManager)
+    public function __construct(string $publicDirPath)
     {
         $this->publicDirPath = $publicDirPath;
-        $this->entityManager = $entityManager;
     }
 
     public function create(ArticleInterface $article): Item
     {
         $item = $this->createArticle($article);
-        $featureMedia = $this->createMedia($article);
-        if (null !== $featureMedia) {
-            $associations = new Associations();
-            $associations->add('featuremedia', $this->createMedia($article));
-            $item->setAssociations($associations);
+
+        if (\count($article->getRenditions()) > 0) {
+            $featureMedia = $this->createMedia($article->getRenditions()[0]);
+            if (null !== $featureMedia) {
+                $associations = new Associations();
+                $associations->add('featuremedia', $this->createMedia($article));
+                $item->setAssociations($associations);
+            }
         }
 
         return $item;
@@ -144,23 +140,8 @@ class NinjsFactory implements FactoryInterface
         return true;
     }
 
-    protected function createMedia(ArticleInterface $article): ?Item
+    protected function createMedia(ArticleRendition $rendition): ?Item
     {
-        $rendition = null;
-        foreach ($this->getRenditionNames() as $renditionName) {
-            if (0 === count($article->getRenditions())) {
-                break;
-            }
-
-            if (null !== $rendition = $article->getRendition($renditionName)) {
-                break;
-            }
-        }
-
-        if (null === $rendition) {
-            return null;
-        }
-
         $imagePath = $this->publicDirPath.$rendition->getLink();
         $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
         $imageFileName = pathinfo($imagePath, PATHINFO_BASENAME);

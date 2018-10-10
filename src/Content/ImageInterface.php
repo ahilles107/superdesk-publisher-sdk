@@ -6,7 +6,7 @@ namespace AHS\Content;
 
 interface ImageInterface
 {
-    public function getId(): int;
+    public function getId(): ?int;
 
     public function setId(int $id): void;
 
@@ -24,7 +24,7 @@ interface ImageInterface
 
     public function setThumbnailPath(string $thumbnailPath): void;
 
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 
     public function setDescription(string $description): void;
 

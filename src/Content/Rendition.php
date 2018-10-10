@@ -7,11 +7,6 @@ namespace AHS\Content;
 final class Rendition
 {
     /**
-     * @var int
-     */
-    private $id;
-
-    /**
      * @var string
      */
     private $caption;
@@ -30,11 +25,6 @@ final class Rendition
      * @var array
      */
     private $details;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function getCaption()
     {

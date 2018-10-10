@@ -59,7 +59,7 @@ class Article extends Content implements ContentInterface, ArticleInterface
     /**
      * @var array
      */
-    protected $renditions = [];
+    protected $images = [];
 
     /**
      * @var string
@@ -208,25 +208,14 @@ class Article extends Content implements ContentInterface, ArticleInterface
         $this->url = $url;
     }
 
-    public function getRenditions(): array
+    public function getImages(): array
     {
-        return $this->renditions;
+        return $this->images;
     }
 
-    public function setRenditions(array $renditions = null): void
+    public function setImages(array $images = null): void
     {
-        $this->renditions = $renditions;
-    }
-
-    public function getRendition(string $caption): ?Rendition
-    {
-        foreach ($this->getRenditions() as $rendition) {
-            if ($rendition->getCaption() === $caption) {
-                return $rendition;
-            }
-        }
-
-        return null;
+        $this->images = $images;
     }
 
     public function getLanguage(): ?string

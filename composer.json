@@ -3,9 +3,12 @@
     "description": "SDK for Superdesk Publisher Content Push and API",
     "type": "library",
     "require": {
+        "php": ">=7.1",
+        "ext-json": "*",
         "ahs/ninjs-php": "master",
-        "behat/transliterator": "^1.2@dev",
-        "hoa/mime": "^3.0@dev"
+        "behat/transliterator": "^1.2",
+        "hoa/mime": "^3.0",
+        "symfony/filesystem": "^4.1"
     },
     "license": "GPL-3.0-only",
     "authors": [

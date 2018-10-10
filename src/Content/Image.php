@@ -14,6 +14,13 @@ class Image extends Content implements ImageInterface
     /**
      * @var string
      */
+    private $domain;
+
+    /**
+     * Url part between domain and basename.
+     *
+     * @var string
+     */
     protected $location;
 
     /**
@@ -29,7 +36,7 @@ class Image extends Content implements ImageInterface
     /**
      * @var string
      */
-    protected $description;
+    protected $description = '';
 
     /**
      * @var string
@@ -56,12 +63,7 @@ class Image extends Content implements ImageInterface
      */
     protected $place;
 
-    /**
-     * @var string
-     */
-    private $domain;
-
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -106,7 +108,7 @@ class Image extends Content implements ImageInterface
         $this->thumbnailPath = $thumbnailPath;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

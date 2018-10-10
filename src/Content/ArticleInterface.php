@@ -24,13 +24,17 @@ interface ArticleInterface
 
     public function getUrl(): ?string;
 
-    public function getRenditions(): array;
+    public function getImages(): array;
+
+    public function setImages(array $images = null);
 
     public function getLanguage(): ?string;
 
     public function getIssue(): ?string;
 
     public function getSection(): ?string;
+
+    public function getImage();
 
     public function getBody(): string;
 

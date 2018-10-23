@@ -47,14 +47,15 @@ class NinjsFactory implements FactoryInterface
         $this->processBody($article);
 
         $item = new Item((string) $article->getUrl());
-        $item->setDescriptionHtml($this->getDescription($article));
-        $item->setDescriptionText(strip_tags($this->getDescription($article)));
+        $item->setDescriptionHtml($article->getDescription($article));
+        $item->setDescriptionText(strip_tags($article->getDescription($article)));
         $item->setBodyHtml($article->getBody());
         $item->setBodyText(strip_tags($article->getBody()));
         $item->setVersion('1');
         $item->setHeadline($article->getTitle());
         $item->setSlugline(Transliterator::urlize($article->getTitle()));
         $item->setVersioncreated($article->getPublishedAt());
+        $item->setKeywords($article->getKeywords());
         $item->setUrgency(5);
         $item->setPriority(5);
         $item->setPubstatus('usable');
@@ -109,18 +110,8 @@ class NinjsFactory implements FactoryInterface
         return ['article_small_image'];
     }
 
-    public function getDescription(ArticleInterface $article): string
-    {
-        if (array_key_exists('deck', $article->getFields())) {
-            return $article->getFields()['deck'];
-        }
-
-        return '';
-    }
-
     public function setCategory(ArticleInterface $article, Item $item): void
     {
-        //$item->addService(new Service($category, (string) $code));
     }
 
     public function setExtra(ArticleInterface $article, Item $item, $extra = null): void

@@ -91,6 +91,11 @@ class Article extends Content implements ContentInterface, ArticleInterface
      */
     protected $command;
 
+    /**
+     * @var mixed
+     */
+    protected $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -146,16 +151,6 @@ class Article extends Content implements ContentInterface, ArticleInterface
         $this->authors = $authors;
     }
 
-    public function getKeywords(): array
-    {
-        return $this->keywords;
-    }
-
-    public function setKeywords(array $keywords): void
-    {
-        $this->keywords = $keywords;
-    }
-
     public function getTitle(): string
     {
         return $this->title;
@@ -191,6 +186,16 @@ class Article extends Content implements ContentInterface, ArticleInterface
         }
 
         $this->fields = $fields;
+    }
+
+    public function getKeywords(): array
+    {
+        return $this->keywords;
+    }
+
+    public function setKeywords(array $keywords): void
+    {
+        $this->keywords = $keywords;
     }
 
     public function getFields(): array
@@ -290,5 +295,10 @@ class Article extends Content implements ContentInterface, ArticleInterface
     public function getOutputFileName(): string
     {
         return $this->getNumber().'.json';
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 }

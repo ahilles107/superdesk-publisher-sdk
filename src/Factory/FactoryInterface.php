@@ -19,8 +19,6 @@ interface FactoryInterface
 
     public function getRenditionNames(): array;
 
-    public function getDescription(ArticleInterface $article): string;
-
     public function setCategory(ArticleInterface $article, Item $item): void;
 
     public function setExtra(ArticleInterface $article, Item $item): void;

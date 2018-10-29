@@ -14,8 +14,6 @@ class NinjsSerializer implements NinjsSerializerInterface
 {
     public function serialize($data, $format, array $context = []): string
     {
-        $context['json_encode_options'] = $context['json_encode_options'] | \JSON_UNESCAPED_UNICODE;
-
         return $this->getSerializer()->serialize($data, $format, $context);
     }
 

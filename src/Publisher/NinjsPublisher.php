@@ -62,7 +62,10 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
             return;
         }
 
-        $ninJs = $this->serializer->serialize($item, 'json', ['json_encode_options' => \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE]);
+        $ninJs = $this->serializer->serialize($item, 'json', [
+            'json_encode_options' => \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE,
+            'ignored_attributes' => ['items'],
+        ]);
         $validator = new NinjsValidator($this->logger);
         if (!$validator->isValid($ninJs)) {
             throw new \Exception('Generated ninjs is not valid');

@@ -25,6 +25,7 @@ class NinjsSerializer implements NinjsSerializerInterface
     protected function getSerializer(): SerializerInterface
     {
         $normalizer = new IgnoreNullValuesNormalizer(null, new CamelCaseToSnakeCaseNameConverter());
+        $normalizer->setIgnoredAttributes(['items']);
 
         return new Serializer([$normalizer], [new JsonEncoder()]);
     }

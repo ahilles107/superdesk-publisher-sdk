@@ -161,6 +161,11 @@ class Article extends Content implements ContentInterface, ArticleInterface
         $this->title = $title;
     }
 
+    public function getDescription(): ?string
+    {
+        return null;
+    }
+
     public function getWebcode(): ?string
     {
         return $this->webcode;
@@ -300,5 +305,10 @@ class Article extends Content implements ContentInterface, ArticleInterface
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function isPublished(): bool
+    {
+        return true;
     }
 }

@@ -8,8 +8,6 @@ interface ArticleInterface
 {
     public function getId(): ?int;
 
-    public function getIdentifier(): ?int;
-
     public function getCreatedAt(): \DateTime;
 
     public function getPublishedAt(): ?\DateTime;
@@ -43,4 +41,6 @@ interface ArticleInterface
     public function setBody(string $body): void;
 
     public function getType(): ?string;
+
+    public function isPublished(): bool;
 }

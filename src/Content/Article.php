@@ -71,6 +71,8 @@ class Article extends Content implements ContentInterface, ArticleInterface
      */
     protected $issue;
 
+    protected $overtitle;
+
     /**
      * @var string
      */
@@ -95,6 +97,11 @@ class Article extends Content implements ContentInterface, ArticleInterface
      * @var mixed
      */
     protected $image;
+
+    /**
+     * @var array
+     */
+    protected $extra = [];
 
     public function getId(): ?int
     {
@@ -310,5 +317,25 @@ class Article extends Content implements ContentInterface, ArticleInterface
     public function isPublished(): bool
     {
         return true;
+    }
+
+    public function getOvertitle(): ?string
+    {
+        return $this->overtitle;
+    }
+
+    public function setOvertitle(string $type): void
+    {
+        $this->overtitle = $type;
+    }
+
+    public function getExtra(): array
+    {
+        return $this->extra;
+    }
+
+    public function setExtra(array $extra): void
+    {
+        $this->extra = $extra;
     }
 }

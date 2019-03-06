@@ -20,22 +20,10 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
     protected $projectDir;
 
     /**
-     * @var FactoryInterface
-     */
-    protected $ninjsFactory;
-
-    /**
      * @var SerializerInterface
      */
     protected $serializer;
 
-    /**
-     * NinjsJsonPublisher constructor.
-     *
-     * @param string              $projectDir
-     * @param FactoryInterface    $ninjsFactory
-     * @param SerializerInterface $serializer
-     */
     public function __construct(string $projectDir, FactoryInterface $ninjsFactory, SerializerInterface $serializer)
     {
         $this->projectDir = $projectDir;
@@ -53,7 +41,6 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
         }
 
         $this->log(LogLevel::INFO, 'Creating NINJS for article with number: '.$content->getIdentifier());
-
         if ($content instanceof ArticleInterface) {
             $item = $this->ninjsFactory->create($content);
         } elseif ($content instanceof ImageInterface) {
@@ -66,6 +53,10 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
             'json_encode_options' => \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE,
             'ignored_attributes' => ['items'],
         ]);
+
+        //HACK: https://github.com/symfony/symfony/issues/23019
+        $ninJs = \str_replace('"associations": []', '"associations": {}', $ninJs);
+
         $validator = new NinjsValidator($this->logger);
         if (!$validator->isValid($ninJs)) {
             throw new \Exception('Generated ninjs is not valid');
@@ -82,13 +73,5 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
         $path = $this->projectDir.'/public/ninjs/'.$fileLocation;
 
         $this->saveContentToFile($fileName, $path, $ninJs);
-    }
-
-    /**
-     * @param FactoryInterface $factory
-     */
-    public function setFactory(FactoryInterface $factory)
-    {
-        $this->ninjsFactory = $factory;
     }
 }

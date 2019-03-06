@@ -20,6 +20,10 @@ interface ImageInterface
 
     public function setBasename(string $basename): void;
 
+    public function getHref(): ?string;
+
+    public function setHref(string $href): void;
+
     public function getThumbnailPath(): ?string;
 
     public function setThumbnailPath(string $thumbnailPath): void;

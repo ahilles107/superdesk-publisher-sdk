@@ -43,4 +43,8 @@ interface ArticleInterface
     public function getType(): ?string;
 
     public function isPublished(): bool;
+
+    public function setExtra(array $extra): void;
+
+    public function getExtra(): array;
 }

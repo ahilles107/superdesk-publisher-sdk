@@ -29,6 +29,11 @@ class Image extends Content implements ImageInterface
     protected $basename;
 
     /**
+     * @var null|string
+     */
+    protected $href;
+
+    /**
      * @var string
      */
     protected $thumbnailPath;
@@ -96,6 +101,16 @@ class Image extends Content implements ImageInterface
     public function setBasename(string $basename): void
     {
         $this->basename = $basename;
+    }
+
+    public function getHref(): ?string
+    {
+        return $this->href;
+    }
+
+    public function setHref(string $href): void
+    {
+        $this->href = $href;
     }
 
     public function getThumbnailPath(): ?string

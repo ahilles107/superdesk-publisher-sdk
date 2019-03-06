@@ -18,16 +18,6 @@ use Hoa\Mime\Mime;
 
 class NinjsFactory implements FactoryInterface
 {
-    /**
-     * @var string
-     */
-    protected $imagesPath;
-
-    public function __construct(string $imagesPath)
-    {
-        $this->imagesPath = $imagesPath;
-    }
-
     public function create(ArticleInterface $article): Item
     {
         $item = $this->createArticle($article);
@@ -37,6 +27,7 @@ class NinjsFactory implements FactoryInterface
             $imageItem = $this->createImageItem($image);
             $associations->add($key, $imageItem);
         }
+
         $item->setAssociations($associations);
 
         return $item;
@@ -70,16 +61,20 @@ class NinjsFactory implements FactoryInterface
 
     public function createImageItem(ImageInterface $image)
     {
-        $imageItem = new Item($image->getDomain().'/'.$image->getLocation().'/'.$image->getBasename());
+        $imageItem = new Item(null !== $image->getHref() ? $image->getHref() : $image->getDomain().'/'.$image->getLocation().'/'.$image->getBasename());
         $extension = pathinfo($imageItem->getGuid(), PATHINFO_EXTENSION);
         $mimeType = Mime::getMimeFromExtension($extension);
         if (null === $mimeType || null === $image->getWidth() || null === $image->getHeight()) {
             return;
         }
+
         $imageItem->setType('picture');
         $imageItem->setHeadline($image->getDescription() ? strip_tags($image->getDescription()) : 'Image #'.$image->getId());
         $imageItem->setDescriptionHtml($image->getDescription());
         $imageItem->setDescriptionText(strip_tags($image->getDescription()));
+        $imageItem->setBodyHtml($image->getDescription());
+        $imageItem->setBodyText(strip_tags($image->getDescription()));
+
         $imageItem->setVersion('1');
         if ($image->getPhotographer()) {
             $author = new Author();
@@ -118,6 +113,10 @@ class NinjsFactory implements FactoryInterface
     {
         if (null === $extra) {
             $extra = new Extra();
+        }
+
+        foreach ($article->getExtra() as $key => $value) {
+            $extra->add($key, $value);
         }
 
         $extra->add('original_published_at', $item->getVersioncreated());

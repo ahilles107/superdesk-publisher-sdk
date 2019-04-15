@@ -34,7 +34,7 @@ interface ArticleInterface
 
     public function getSection(): ?string;
 
-    public function getImage();
+    public function getImage(): ?Image;
 
     public function getBody(): string;
 

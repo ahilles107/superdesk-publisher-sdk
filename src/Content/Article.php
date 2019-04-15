@@ -71,8 +71,6 @@ class Article extends Content implements ContentInterface, ArticleInterface
      */
     protected $issue;
 
-    protected $overtitle;
-
     /**
      * @var string
      */
@@ -94,7 +92,7 @@ class Article extends Content implements ContentInterface, ArticleInterface
     protected $command;
 
     /**
-     * @var mixed
+     * @var null|Image
      */
     protected $image;
 
@@ -185,18 +183,6 @@ class Article extends Content implements ContentInterface, ArticleInterface
 
     public function setFields(array $fields): void
     {
-        if (array_key_exists('tekst', $fields)) {
-            $this->setBody($fields['tekst']);
-        }
-
-        if (array_key_exists('full_text', $fields)) {
-            $this->setBody($fields['full_text']);
-        }
-
-        if (array_key_exists('text', $fields)) {
-            $this->setBody($fields['text']);
-        }
-
         $this->fields = $fields;
     }
 
@@ -309,7 +295,7 @@ class Article extends Content implements ContentInterface, ArticleInterface
         return $this->getNumber().'.json';
     }
 
-    public function getImage()
+    public function getImage(): ?Image
     {
         return $this->image;
     }
@@ -317,16 +303,6 @@ class Article extends Content implements ContentInterface, ArticleInterface
     public function isPublished(): bool
     {
         return true;
-    }
-
-    public function getOvertitle(): ?string
-    {
-        return $this->overtitle;
-    }
-
-    public function setOvertitle(string $type): void
-    {
-        $this->overtitle = $type;
     }
 
     public function getExtra(): array

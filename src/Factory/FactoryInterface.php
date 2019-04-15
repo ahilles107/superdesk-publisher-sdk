@@ -17,8 +17,6 @@ interface FactoryInterface
 
     public function createImageItem(ImageInterface $image);
 
-    public function getRenditionNames(): array;
-
     public function setCategory(ArticleInterface $article, Item $item): void;
 
     public function setExtra(ArticleInterface $article, Item $item): void;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AHS\Factory;
 
+use AHS\Content\Image;
 use AHS\Ninjs\Schema\Associations;
 use AHS\Ninjs\Schema\Renditions;
 use AHS\Content\ArticleInterface;
@@ -26,6 +27,10 @@ class NinjsFactory implements FactoryInterface
         foreach ($article->getImages() as $key => $image) {
             $imageItem = $this->createImageItem($image);
             $associations->add($key, $imageItem);
+        }
+
+        if ($article->getImage() instanceof Image) {
+            $associations->add('featuremedia', $this->createImageItem($article->getImage()));
         }
 
         $item->setAssociations($associations);
@@ -98,11 +103,6 @@ class NinjsFactory implements FactoryInterface
         $imageItem->setRenditions($renditions);
 
         return $imageItem;
-    }
-
-    public function getRenditionNames(): array
-    {
-        return ['article_small_image'];
     }
 
     public function setCategory(ArticleInterface $article, Item $item): void

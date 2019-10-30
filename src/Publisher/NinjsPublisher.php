@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace AHS\Publisher;
 
+use function str_replace;
 use AHS\Content\ArticleInterface;
 use AHS\Content\ContentInterface;
 use AHS\Content\ImageInterface;
 use AHS\Factory\FactoryInterface;
 use AHS\Serializer\SerializerInterface;
+use Exception;
 use Psr\Log\LogLevel;
 use SWP\Component\Bridge\Validator\NinjsValidator;
 
@@ -55,11 +57,11 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
         ]);
 
         //HACK: https://github.com/symfony/symfony/issues/23019
-        $ninJs = \str_replace('"associations": []', '"associations": {}', $ninJs);
+        $ninJs = str_replace('"associations": []', '"associations": {}', $ninJs);
 
         $validator = new NinjsValidator($this->logger);
         if (!$validator->isValid($ninJs)) {
-            throw new \Exception('Generated ninjs is not valid');
+            throw new Exception('Generated ninjs is not valid');
         }
 
         $this->log(LogLevel::INFO, 'Generated ninjs is valid');

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AHS\Content;
 
-class Article extends Content implements ContentInterface, ArticleInterface
+class Article extends Content implements ArticleInterface
 {
     /**
      * @var int
@@ -92,14 +92,13 @@ class Article extends Content implements ContentInterface, ArticleInterface
     protected $command;
 
     /**
-     * @var null|Image
+     * @var Image|null
      */
     protected $image;
 
-    /**
-     * @var array
-     */
     protected $extra = [];
+
+    protected $categories = [];
 
     public function getId(): ?int
     {
@@ -313,5 +312,15 @@ class Article extends Content implements ContentInterface, ArticleInterface
     public function setExtra(array $extra): void
     {
         $this->extra = $extra;
+    }
+
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(array $categories): void
+    {
+        $this->categories = $categories;
     }
 }

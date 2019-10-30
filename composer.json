@@ -5,7 +5,7 @@
     "require": {
         "php": ">=7.1",
         "ext-json": "*",
-        "ahs/ninjs-php": "master",
+        "ahs/ninjs-php": "^v1.1",
         "behat/transliterator": "^1.2",
         "hoa/mime": "^3.0",
         "symfony/filesystem": "^4.1"

@@ -14,8 +14,10 @@ use AHS\Ninjs\Superdesk\Item;
 use AHS\Ninjs\Superdesk\Rendition;
 use AHS\Content\ContentInterface;
 use AHS\Content\ImageInterface;
+use AHS\Ninjs\Superdesk\Service;
 use Behat\Transliterator\Transliterator;
 use Hoa\Mime\Mime;
+use UnexpectedValueException;
 
 class NinjsFactory implements FactoryInterface
 {
@@ -42,7 +44,7 @@ class NinjsFactory implements FactoryInterface
     {
         $this->processBody($article);
 
-        $item = new Item((string) $article->getUrl());
+        $item = new Item($article->getUrl());
         $item->setDescriptionHtml($article->getDescription($article));
         $item->setDescriptionText(strip_tags($article->getDescription($article)));
         $item->setBodyHtml($article->getBody());
@@ -64,13 +66,15 @@ class NinjsFactory implements FactoryInterface
         return $item;
     }
 
-    public function createImageItem(ImageInterface $image)
+    public function createImageItem(ImageInterface $image): Item
     {
-        $imageItem = new Item(null !== $image->getHref() ? $image->getHref() : $image->getDomain().'/'.$image->getLocation().'/'.$image->getBasename());
+        $imageItem = new Item(
+            $image->getHref() ?? $image->getDomain().'/'.$image->getLocation().'/'.$image->getBasename()
+        );
         $extension = pathinfo($imageItem->getGuid(), PATHINFO_EXTENSION);
         $mimeType = Mime::getMimeFromExtension($extension);
         if (null === $mimeType || null === $image->getWidth() || null === $image->getHeight()) {
-            return;
+            throw new UnexpectedValueException('Can\'t read image data (mime, or dimensions)');
         }
 
         $imageItem->setType('picture');
@@ -107,6 +111,9 @@ class NinjsFactory implements FactoryInterface
 
     public function setCategory(ArticleInterface $article, Item $item): void
     {
+        foreach ($article->getCategories() as $code => $category) {
+            $item->addService(new Service($category, $code));
+        }
     }
 
     public function setExtra(ArticleInterface $article, Item $item, $extra = null): void
@@ -144,7 +151,6 @@ class NinjsFactory implements FactoryInterface
 
             return;
         }
-
         $byline = [];
         foreach ($articleAuthors as $articleAuthor) {
             $author = new Author();

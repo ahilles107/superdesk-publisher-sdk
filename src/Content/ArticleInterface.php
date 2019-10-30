@@ -30,9 +30,9 @@ interface ArticleInterface
 
     public function getLanguage(): ?string;
 
-    public function getIssue(): ?string;
+    public function getIssue(): ?array;
 
-    public function getSection(): ?string;
+    public function getSection(): ?array;
 
     public function getImage(): ?Image;
 
@@ -47,4 +47,8 @@ interface ArticleInterface
     public function setExtra(array $extra): void;
 
     public function getExtra(): array;
+
+    public function getCategories(): array;
+
+    public function setCategories(array $categories);
 }

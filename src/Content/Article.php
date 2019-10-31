@@ -41,6 +41,8 @@ class Article extends Content implements ArticleInterface
      */
     protected $title;
 
+    protected  $description;
+
     /**
      * @var string
      */
@@ -110,17 +112,17 @@ class Article extends Content implements ArticleInterface
         $this->id = $id;
     }
 
-    public function getIdentifier(): ?int
+    public function getIdentifier()
     {
         return $this->getNumber();
     }
 
-    public function getNumber(): ?int
+    public function getNumber()
     {
         return $this->number;
     }
 
-    public function setNumber(int $number = null): void
+    public function setNumber($number = null): void
     {
         $this->number = $number;
     }
@@ -165,9 +167,15 @@ class Article extends Content implements ArticleInterface
         $this->title = $title;
     }
 
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
     public function getDescription(): ?string
     {
-        return null;
+        return $this->description;
     }
 
     public function getWebcode(): ?string
@@ -292,6 +300,10 @@ class Article extends Content implements ArticleInterface
     public function getOutputFileName(): string
     {
         return $this->getNumber().'.json';
+    }
+
+    public function setImage(?ImageInterface $image) {
+        $this->image = $image;
     }
 
     public function getImage(): ?Image

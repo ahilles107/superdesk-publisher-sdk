@@ -8,6 +8,10 @@ interface ArticleInterface
 {
     public function getId(): ?int;
 
+    public function getNumber();
+
+    public function setNumber($number = null): void;
+
     public function getCreatedAt(): \DateTime;
 
     public function getPublishedAt(): ?\DateTime;
@@ -30,9 +34,9 @@ interface ArticleInterface
 
     public function getLanguage(): ?string;
 
-    public function getIssue(): ?array;
+    public function getIssue(): ?string;
 
-    public function getSection(): ?array;
+    public function getSection(): ?string;
 
     public function getImage(): ?Image;
 

@@ -36,10 +36,10 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
     /**
      * {@inheritdoc}
      */
-    public function publish(ContentInterface $content, $printRenderedTemplate = false): string
+    public function publish(ContentInterface $content, $printRenderedTemplate = false): ?string
     {
         if (!$this->ninjsFactory->isSupported($content)) {
-            return;
+            return null;
         }
 
         $this->log(LogLevel::INFO, 'Creating NINJS for article with number: '.$content->getIdentifier());
@@ -48,7 +48,7 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
         } elseif ($content instanceof ImageInterface) {
             $item = $this->ninjsFactory->createImageItem($content);
         } else {
-            return;
+            return null;
         }
 
         $ninJs = $this->serializer->serialize($item, 'json', [

@@ -10,5 +10,5 @@ use AHS\LoggerAwareInterface;
 
 interface PublisherInterface extends LoggerAwareInterface, FactoryAwareInterface
 {
-    public function publish(ContentInterface $content, $printOutput = false): void;
+    public function publish(ContentInterface $content, $printRenderedTemplate = false): string;
 }

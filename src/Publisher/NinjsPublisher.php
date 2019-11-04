@@ -36,7 +36,7 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
     /**
      * {@inheritdoc}
      */
-    public function publish(ContentInterface $content, $printRenderedTemplate = false): void
+    public function publish(ContentInterface $content, $printRenderedTemplate = false): string
     {
         if (!$this->ninjsFactory->isSupported($content)) {
             return;
@@ -75,5 +75,7 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
         $path = $this->projectDir.'/public/ninjs/'.$fileLocation;
 
         $this->saveContentToFile($fileName, $path, $ninJs);
+
+        return $path;
     }
 }

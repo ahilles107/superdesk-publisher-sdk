@@ -76,6 +76,6 @@ class NinjsPublisher extends AbstractPublisher implements PublisherInterface
 
         $this->saveContentToFile($fileName, $path, $ninJs);
 
-        return $path;
+        return $path.DIRECTORY_SEPARATOR.$fileName;
     }
 }
